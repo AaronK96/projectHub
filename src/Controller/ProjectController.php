@@ -30,8 +30,6 @@ final class ProjectController extends AbstractController
             $progress[$project->getId()] = round(($doneCount / $taskCount) * 100);
         }
 
-        dump($progress);
-
         return $this->render('project/index.html.twig', [
             'controller_name' => 'ProjectController',
             'projects' => $projects,
