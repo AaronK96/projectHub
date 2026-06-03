@@ -36,6 +36,9 @@ class Project
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project')]
     private Collection $tasks;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $deadline = null;
+
     public function __construct()
     {
         $this->team = new ArrayCollection();
@@ -140,6 +143,18 @@ class Project
                 $task->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTime
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(?\DateTime $deadline): static
+    {
+        $this->deadline = $deadline;
 
         return $this;
     }

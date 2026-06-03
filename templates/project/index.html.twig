@@ -1,0 +1,267 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projekte{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styles/project/project.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid p-4">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold">
+
+                Projekte
+
+            </h1>
+
+            <p class="text-muted">
+
+                Verwalte alle Projekte deines Teams.
+
+            </p>
+
+        </div>
+
+        <button class="btn btn-primary">
+
+            <i class="bi bi-plus-lg"></i>
+
+            Neues Projekt
+
+        </button>
+
+    </div>
+
+    <!-- Filter -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <input
+
+                        type="text"
+
+                        class="form-control"
+
+                        placeholder="Projekt suchen...">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <select class="form-select">
+
+                        <option>Status</option>
+
+                        <option>Offen</option>
+
+                        <option>In Progress</option>
+
+                        <option>Review</option>
+
+                        <option>Done</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <select class="form-select">
+
+                        <option>Team</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Project Grid -->
+
+    <div class="row g-4">
+
+        {% for project in projects %}
+
+            <div class="col-xl-4 col-lg-6">
+
+                <div class="project-card">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h5 class="fw-bold">
+
+                                {{ project.name }}
+
+                            </h5>
+
+                            <span class="badge bg-primary">
+
+                                {{ project.status }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="dropdown">
+
+                            <button
+
+                                class="btn btn-light btn-sm"
+
+                                data-bs-toggle="dropdown">
+
+                                <i class="bi bi-three-dots"></i>
+
+                            </button>
+
+                            <ul class="dropdown-menu">
+
+                                <li>
+
+                                    <a class="dropdown-item" href="#">
+
+                                        Öffnen
+
+                                    </a>
+
+                                </li>
+
+                                <li>
+
+                                    <a class="dropdown-item" href="#">
+
+                                        Bearbeiten
+
+                                    </a>
+
+                                </li>
+
+                                <li>
+
+                                    <a class="dropdown-item text-danger" href="#">
+
+                                        Löschen
+
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+                    {% set randomProgress = random(100) %}
+                    {# TODO: Implement Progress #}
+
+                    <div class="mb-3">
+
+                        <div class="d-flex justify-content-between mb-2">
+
+                            <small>Fortschritt</small>
+
+                            <small>
+
+                                {{ randomProgress }}%
+
+                            </small>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+
+                                class="progress-bar"
+
+                                style="width: {{ randomProgress }}%">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row text-center mb-4">
+
+                        <div class="col">
+
+                            <h5>{{ project.tasks|length }}</h5>
+
+                            <small class="text-muted">
+
+                                Tasks
+
+                            </small>
+
+                        </div>
+
+                        <div class="col">
+
+                            <h5>8</h5>
+
+                            <small class="text-muted">
+
+                                Mitglieder
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div class="avatars">
+
+                            <img src="https://i.pravatar.cc/40?img=1">
+
+                            <img src="https://i.pravatar.cc/40?img=2">
+
+                            <img src="https://i.pravatar.cc/40?img=3">
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            <i class="bi bi-calendar"></i>
+
+                            {{ project.deadline|date }}
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

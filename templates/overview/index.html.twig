@@ -1,20 +1,336 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello OverviewController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <!-- Topbar -->
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/aaronkaschwich/development/projects/projectHub/src/Controller/OverviewController.php</code></li>
-        <li>Your template at <code>/Users/aaronkaschwich/development/projects/projectHub/templates/overview/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="d-flex justify-content-between align-items-center py-4">
+
+        <div>
+
+            <h2 class="fw-bold">Übersicht</h2>
+
+            <p class="text-muted mb-0">
+
+                Willkommen zurück, Max 👋
+
+            </p>
+
+        </div>
+
+        <div>
+
+            <button class="btn btn-outline-secondary">
+
+                <i class="bi bi-bell"></i>
+
+            </button>
+
+            <button class="btn btn-primary">
+
+                Neues Projekt
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="stat-card stat-purple">
+                <small>Projekte</small>
+                <h2>{{ projects|length }}</h2>
+                <span>Aktive Projekte</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card stat-blue">
+                <small>Tasks</small>
+                <h2>48</h2>
+                <span>Offene Aufgaben</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card stat-green">
+                <small>Teammitglieder</small>
+                <h2>24</h2>
+                <span>Online</span>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card stat-orange">
+                <small>Erledigt</small>
+                <h2>128</h2>
+                <span>Diese Woche</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Widgets -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    Projekte
+
+                </div>
+
+                <div class="card-body">
+
+                    {% for project in projects %}
+                        {% set rand = random(100) %}
+                        <div class="mb-3">
+
+                            <div class="d-flex justify-content-between">
+
+                                <span>{{ project.name }}</span>
+
+                                <span>{{ rand }}%</span>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div class="progress-bar" style="width:{{ rand }}%"></div>
+
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    Aufgabenübersicht
+
+                </div>
+
+                <div class="card-body">
+
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item">
+
+                            Offen: 28
+
+                        </li>
+
+                        <li class="list-group-item">
+
+                            In Arbeit: 14
+
+                        </li>
+
+                        <li class="list-group-item">
+
+                            Review: 8
+
+                        </li>
+
+                        <li class="list-group-item">
+
+                            Erledigt: 36
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white">
+
+                    Aktivitäten
+
+                </div>
+
+                <div class="card-body">
+
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item">
+
+                            Lisa hat Task kommentiert
+
+                        </li>
+
+                        <li class="list-group-item">
+
+                            Neue API Integration erstellt
+
+                        </li>
+
+                        <li class="list-group-item">
+
+                            Sprint Planning morgen
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Kanban -->
+
+    <div class="row g-3">
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    To Do
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card mb-2">
+
+                        <div class="card-body">
+
+                            Login Page erstellen
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            SEO Optimierung
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    In Arbeit
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            API Integration
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    Review
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            UI Review
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    Erledigt
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            Projekt Setup
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 {% endblock %}

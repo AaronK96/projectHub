@@ -1,0 +1,51 @@
+.project-card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    box-shadow:
+
+        0 10px 30px rgba(0,0,0,.05);
+
+    transition: .3s;
+
+}
+
+.project-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+
+        0 20px 40px rgba(0,0,0,.08);
+
+}
+
+.avatars {
+
+    display: flex;
+
+}
+
+.avatars img {
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 3px solid white;
+
+    margin-left: -10px;
+
+}
+
+.avatars img:first-child {
+
+    margin-left: 0;
+
+}

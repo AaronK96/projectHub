@@ -28,6 +28,12 @@ class Task
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $priority = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $assignee = null;
+
+    #[ORM\Column]
+    private ?\DateTime $deadline = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,6 +102,30 @@ class Task
     public function setPriority(?string $priority): static
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getAssignee(): ?string
+    {
+        return $this->assignee;
+    }
+
+    public function setAssignee(string $assignee): static
+    {
+        $this->assignee = $assignee;
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTime
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(\DateTime $deadline): static
+    {
+        $this->deadline = $deadline;
 
         return $this;
     }

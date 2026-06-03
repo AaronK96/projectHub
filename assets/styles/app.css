@@ -1,3 +1,28 @@
+@import './variables.css';
+@import './dashboard.css';
+
 body {
-    background-color: skyblue;
+
+    background: var(--body-bg);
+
+    font-family:
+
+        Inter,
+
+        system-ui,
+
+        sans-serif;
+
+}
+
+.dashboard-card {
+
+    border: none;
+
+    border-radius: var(--radius);
+
+    box-shadow:
+
+        0 10px 25px rgba(0,0,0,.05);
+
 }

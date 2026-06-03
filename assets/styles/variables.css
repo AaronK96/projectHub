@@ -1,0 +1,25 @@
+:root {
+
+    --sidebar-bg: #0f172a;
+
+    --sidebar-hover: #1e293b;
+
+    --primary: #7c3aed;
+
+    --primary-light: #8b5cf6;
+
+    --card-bg: #ffffff;
+
+    --body-bg: #f5f7fb;
+
+    --border-color: #e5e7eb;
+
+    --success: #22c55e;
+
+    --warning: #f59e0b;
+
+    --danger: #ef4444;
+
+    --radius: 18px;
+
+}

@@ -1,0 +1,131 @@
+.table {
+
+    --bs-table-bg: transparent;
+
+}
+
+.table thead th {
+
+    color: #64748b;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+.table tbody tr {
+
+    transition: .2s;
+
+}
+
+.table tbody tr:hover {
+
+    background: #f8fafc;
+
+}
+
+.user-avatar {
+
+    width: 36px;
+
+    height: 36px;
+
+    border-radius: 50%;
+
+}
+
+.status-badge {
+
+    padding: 6px 14px;
+
+    border-radius: 999px;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+
+}
+
+.status-to-do {
+
+    background: #eef2ff;
+
+    color: #475569;
+
+}
+
+.status-in-progress {
+
+    background: #dbeafe;
+
+    color: #2563eb;
+
+}
+
+.status-review {
+
+    background: #ede9fe;
+
+    color: #7c3aed;
+
+}
+
+.status-done {
+
+    background: #dcfce7;
+
+    color: #16a34a;
+
+}
+
+.priority {
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: .85rem;
+
+}
+
+.priority-hoch {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+}
+
+.priority-mittel {
+
+    background: #ffedd5;
+
+    color: #ea580c;
+
+}
+
+.priority-niedrig {
+
+    background: #dcfce7;
+
+    color: #16a34a;
+
+}
+
+.project-dot {
+
+    width: 10px;
+
+    height: 10px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #7c3aed;
+
+    margin-right: 8px;
+
+}
