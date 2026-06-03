@@ -26,9 +26,6 @@ final class ProjectController extends AbstractController
                 }
                 
             }
-
-            dump($taskCount);
-            dump($doneCount);
             
             $progress[$project->getId()] = round(($doneCount / $taskCount) * 100);
         }

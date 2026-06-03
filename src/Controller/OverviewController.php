@@ -46,8 +46,6 @@ final class OverviewController extends AbstractController
         $taskCount['done'] = $taskDoneCount;
         $taskCount['open'] = $taskActiveCount + $taskReviewCount;
 
-        dump($taskCount);
-
         return $this->render('overview/index.html.twig', [
             'controller_name' => 'OverviewController',
             'projects' => $projects,
