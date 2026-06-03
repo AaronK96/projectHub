@@ -1,0 +1,75 @@
+.project-card{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:24px;
+
+    box-shadow:
+
+    0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.project-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.project-icon{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:1.7rem;
+
+}
+
+.purple{background:#efe8ff;color:#6d4cff;}
+
+.blue{background:#e7f0ff;color:#2b6eff;}
+
+.green{background:#e5f8ee;color:#16a34a;}
+
+.orange{background:#fff1df;color:#f97316;}
+
+.cyan{background:#e2f7fa;color:#06b6d4;}
+
+.pink{background:#ffe5f0;color:#ec4899;}
+
+.progress-wrapper{
+
+    height:8px;
+
+    background:#edf1f7;
+
+    border-radius:999px;
+
+    margin-top:20px;
+
+}
+
+.progress-bar-custom{
+
+    height:100%;
+
+    background:#6d4cff;
+
+    border-radius:999px;
+
+}
