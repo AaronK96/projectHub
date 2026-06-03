@@ -91,20 +91,19 @@
                 <div class="card-body">
 
                     {% for project in projects %}
-                        {% set rand = random(100) %}
                         <div class="mb-3">
 
                             <div class="d-flex justify-content-between">
 
                                 <span>{{ project.name }}</span>
 
-                                <span>{{ rand }}%</span>
+                                <span>{{ progress[project.id] }}%</span>
 
                             </div>
 
                             <div class="progress">
 
-                                <div class="progress-bar" style="width:{{ rand }}%"></div>
+                                <div class="progress-bar" style="width:{{ progress[project.id] }}%"></div>
 
                             </div>
 

@@ -17,9 +17,20 @@ final class OverviewController extends AbstractController
         $projects = $entityManager->getRepository(Project::class)->findAll();
         $tasks = $entityManager->getRepository(Task::class)->findAll();
 
-        //$openTasks = $entityManager->getRepository(Task::class)->findBy([
-        //    'status' => ['active', 'review']
-        //]);
+        $progress = [];
+        foreach ($projects as $project) {
+            $doneCount = 0;
+            $projectTaskCount = count($project->getTasks());
+            
+            foreach ($project->getTasks() as $task) {
+                if($task->getStatus() == 'done') {
+                    $doneCount++;
+                }
+                
+            }
+            
+            $progress[$project->getId()] = round(($doneCount / $projectTaskCount) * 100);
+        }
 
         $taskCount = [];
 
@@ -50,6 +61,7 @@ final class OverviewController extends AbstractController
             'controller_name' => 'OverviewController',
             'projects' => $projects,
             'taskCount' => $taskCount,
+            'progress' => $progress
         ]);
     }
 }
