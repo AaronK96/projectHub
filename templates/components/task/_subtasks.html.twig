@@ -1,0 +1,48 @@
+<div class="sidebar-card">
+
+    <div class="section-header">
+
+        <h4>
+
+            Unteraufgaben
+
+        </h4>
+
+        <button class="action-btn-small icon-btn">
+
+            <i class="bi bi-plus"></i>
+
+        </button>
+
+    </div>
+
+    {% if subtasks|length > 0 %}
+
+        {% for subtask in subtasks %}
+            <div class="subtask">
+
+                <i class="bi {{ subtask.isCompleted ? 'bi-check-circle-fill success' : 'bi-circle' }}"></i>
+
+                {{ subtask.title }}
+
+                {% if subtask.isCompleted %}
+                <span class="tag green">
+
+                    Erledigt
+
+                </span>
+                {% else %}
+                <span class="tag purple">
+
+                    In Progress
+
+                </span>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    {% else %}
+        Noch keine Unteraufgaben vorhanden
+    {% endif %}
+
+</div>

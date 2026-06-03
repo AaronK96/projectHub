@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
@@ -33,6 +36,20 @@ class Task
 
     #[ORM\Column]
     private ?\DateTime $deadline = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null;
+
+    /**
+     * @var Collection<int, Subtask>
+     */
+    #[ORM\OneToMany(targetEntity: Subtask::class, mappedBy: 'task')]
+    private Collection $subtasks;
+
+    public function __construct()
+    {
+        $this->subtasks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -126,6 +143,48 @@ class Task
     public function setDeadline(\DateTime $deadline): static
     {
         $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subtask>
+     */
+    public function getSubtasks(): Collection
+    {
+        return $this->subtasks;
+    }
+
+    public function addSubtask(Subtask $subtask): static
+    {
+        if (!$this->subtasks->contains($subtask)) {
+            $this->subtasks->add($subtask);
+            $subtask->setTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubtask(Subtask $subtask): static
+    {
+        if ($this->subtasks->removeElement($subtask)) {
+            // set the owning side to null (unless already changed)
+            if ($subtask->getTask() === $this) {
+                $subtask->setTask(null);
+            }
+        }
 
         return $this;
     }

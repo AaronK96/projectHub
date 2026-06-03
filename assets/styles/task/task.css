@@ -36,18 +36,6 @@
 
 }
 
-.status-badge {
-
-    padding: 6px 14px;
-
-    border-radius: 999px;
-
-    font-size: .85rem;
-
-    font-weight: 600;
-
-}
-
 .status-to-do {
 
     background: #eef2ff;
@@ -127,5 +115,99 @@
     background: #7c3aed;
 
     margin-right: 8px;
+
+}
+
+.table-action-btn {
+
+    width: 38px;
+
+    height: 38px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #64748b;
+
+    transition: .2s;
+
+}
+
+.table-action-btn:hover {
+
+    background: #f8fafc;
+
+    color: #6d4cff;
+
+}
+
+.task-dropdown {
+
+    border: none;
+
+    border-radius: 16px;
+
+    padding: 8px;
+
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .12);
+
+    z-index: 9999;
+
+}
+
+.task-dropdown-fixed {
+
+    position: fixed !important;
+
+    width: 220px;
+
+    min-width: 220px;
+
+    max-width: 220px;
+
+    z-index: 9999;
+
+}
+
+.task-dropdown .dropdown-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 10px;
+
+    padding: 10px 12px;
+
+    font-size: .95rem;
+
+    color: #17203a;
+
+}
+
+.task-dropdown .dropdown-item:hover {
+
+    background: #f8fafc;
+
+    color: #6d4cff;
+
+}
+
+.task-dropdown .dropdown-item.text-danger:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
 
 }

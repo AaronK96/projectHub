@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+TASK-124 - {{ task.title }}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('styles/task/task-detail.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+<div class="task-page">
+
+    {% include 'components/task/_header.html.twig' %}
+
+    <div class="task-layout">
+
+        <div class="task-main">
+
+            {% include 'components/task/_task_info.html.twig' %}
+
+            {% include 'components/task/_tabs.html.twig' %}
+
+            {% include 'components/task/_description.html.twig' %}
+
+            {% include 'components/task/_attachments.html.twig' %}
+
+        </div>
+
+        <div class="task-sidebar">
+
+            {% include 'components/task/_meta_sidebar.html.twig' %}
+
+            {% include 'components/task/_assignee_card.html.twig' %}
+
+            {% include 'components/task/_subtasks.html.twig' %}
+
+            {% include 'components/task/_activity_feed.html.twig' %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

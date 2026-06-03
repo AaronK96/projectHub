@@ -1,0 +1,78 @@
+<div class="task-header">
+
+    <div>
+
+        <div class="breadcrumbs">
+
+            <a class="breadcrumb-link" href="#">
+
+                Projekte
+
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a class="breadcrumb-link" href="#">
+
+                Website Redesign
+
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a class="breadcrumb-link" href="#">
+
+                Aufgaben
+
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>
+
+                {{ task.title }}
+
+            </span>
+
+        </div>
+
+        <a href="{{ path('app_tasks') }}" class="button-link">
+            <button class="action-btn btn-back">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Zurück
+
+            </button>
+        </a>
+    </div>
+
+    <div class="task-actions">
+
+        <button class="action-btn">
+
+            <i class="bi bi-pencil"></i>
+
+            Bearbeiten
+
+        </button>
+
+        <button class="action-btn">
+
+            <i class="bi bi-share"></i>
+
+            Teilen
+
+        </button>
+
+        <button class="btn btn-primary-action">
+
+            <i class="bi bi-three-dots"></i>
+
+            Mehr
+
+        </button>
+
+    </div>
+
+</div>

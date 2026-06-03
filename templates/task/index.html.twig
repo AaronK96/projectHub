@@ -3,6 +3,7 @@
 {% block title %}Aufgaben{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link href="{{ asset('styles/task/task.css') }}" rel="stylesheet">
 {% endblock %}
 
@@ -228,18 +229,83 @@
 
                         </td>
 
-                        <td>
+                        <td class="text-end">
 
-                            <button
+                            <div class="dropdown">
 
-                                class="btn btn-light btn-sm">
+                                <button
 
-                                <i class="bi bi-three-dots"></i>
+                                    class="table-action-btn"
 
-                            </button>
+                                    type="button"
+
+                                    data-bs-toggle="dropdown"
+
+                                    data-bs-popper="none"
+
+                                    aria-expanded="false">
+
+                                    <i class="bi bi-three-dots"></i>
+
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end task-dropdown task-dropdown-fixed">
+
+                                    <li>
+
+                                        <a class="dropdown-item" href="{{ path('task_show', {id: task.id}) }}">
+
+                                            <i class="bi bi-eye"></i>
+
+                                            Aufgabe öffnen
+
+                                        </a>
+
+                                    </li>
+
+                                    <li>
+
+                                        <a class="dropdown-item" href="#">
+
+                                            <i class="bi bi-pencil"></i>
+
+                                            Bearbeiten
+
+                                        </a>
+
+                                    </li>
+
+                                    <li>
+
+                                        <a class="dropdown-item" href="#">
+
+                                            <i class="bi bi-check2-circle"></i>
+
+                                            Als erledigt markieren
+
+                                        </a>
+
+                                    </li>
+
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <li>
+
+                                        <a class="dropdown-item text-danger" href="#">
+
+                                            <i class="bi bi-trash"></i>
+
+                                            Löschen
+
+                                        </a>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
 
                         </td>
-
                     </tr>
 
                 {% endfor %}
