@@ -173,8 +173,6 @@
                     </div>
 
                     <hr>
-                    {% set randomProgress = random(100) %}
-                    {# TODO: Implement Progress #}
 
                     <div class="mb-3">
 
@@ -184,7 +182,7 @@
 
                             <small>
 
-                                {{ randomProgress }}%
+                                {{ progress[project.id] }}%
 
                             </small>
 
@@ -196,7 +194,7 @@
 
                                 class="progress-bar"
 
-                                style="width: {{ randomProgress }}%">
+                                style="width: {{ progress[project.id] }}%">
 
                             </div>
 

@@ -15,9 +15,30 @@ final class ProjectController extends AbstractController
     {
         $projects = $entityManager->getRepository(Project::class)->findAll();
 
+        $progress = [];
+        foreach ($projects as $project) {
+            $doneCount = 0;
+            $taskCount = count($project->getTasks());
+            
+            foreach ($project->getTasks() as $task) {
+                if($task->getStatus() == 'done') {
+                    $doneCount++;
+                }
+                
+            }
+
+            dump($taskCount);
+            dump($doneCount);
+            
+            $progress[$project->getId()] = round(($doneCount / $taskCount) * 100);
+        }
+
+        dump($progress);
+
         return $this->render('project/index.html.twig', [
             'controller_name' => 'ProjectController',
-            'projects' => $projects
+            'projects' => $projects,
+            'progress' => $progress
         ]);
     }
 }
