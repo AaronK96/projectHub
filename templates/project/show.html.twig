@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+    {{ project.name }}
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styles/project/project-detail.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+<div class="project-detail">
+
+    {% include 'components/_project_header.html.twig' %}
+
+    {% include 'components/_project_tabs.html.twig' %}
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Fortschritt
+
+            </div>
+
+            <div class="stat-number">
+
+                42%
+
+            </div>
+
+            <div class="progress project-progress">
+
+                <div
+
+                    class="progress-bar"
+
+                    style="width:42%">
+
+                </div>
+
+            </div>
+
+            <small>
+
+                24 von 57 Aufgaben abgeschlossen
+
+            </small>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Aufgaben
+
+            </div>
+
+            <div class="stat-number">
+
+                24 / 57
+
+            </div>
+
+            <small>
+
+                33 offen · 24 erledigt
+
+            </small>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Team
+
+            </div>
+
+            <div class="stat-number">
+
+                8
+
+            </div>
+
+            <small>
+
+                Mitglieder
+
+            </small>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Deadline
+
+            </div>
+
+            <div class="stat-number">
+
+                01. Aug. 2025
+
+            </div>
+
+            <small class="text-danger">
+
+                In 17 Tagen fällig
+
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="content-grid">
+
+        <div class="left-column">
+
+            {% include 'components/_activity_feed.html.twig' %}
+
+        </div>
+
+        <div class="center-column">
+
+            {% include 'components/_kanban_preview.html.twig' %}
+
+        </div>
+
+        <div class="right-column">
+
+            {% include 'components/_team_widget.html.twig' %}
+
+            {% include 'components/_time_tracking.html.twig' %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

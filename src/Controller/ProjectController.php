@@ -36,4 +36,15 @@ final class ProjectController extends AbstractController
             'progress' => $progress
         ]);
     }
+
+    #[Route('/project/{id}', name: 'project_show')]
+    public function show(Project $project): Response 
+    {
+        dump($project);
+
+        return $this->render('project/show.html.twig', [
+            'controller_name' => 'ProjectController',
+            'project' => $project
+        ]);
+    }
 }
