@@ -51,7 +51,7 @@
         <div class="col-md-3">
             <div class="stat-card stat-blue">
                 <small>Tasks</small>
-                <h2>48</h2>
+                <h2>{{ taskCount['open'] }}</h2>
                 <span>Offene Aufgaben</span>
             </div>
         </div>
@@ -133,25 +133,25 @@
 
                         <li class="list-group-item">
 
-                            Offen: 28
+                            Offen: {{ taskCount['open'] }}
 
                         </li>
 
                         <li class="list-group-item">
 
-                            In Arbeit: 14
+                            In Arbeit: {{ taskCount['active'] }}
 
                         </li>
 
                         <li class="list-group-item">
 
-                            Review: 8
+                            Review: {{ taskCount['review'] }}
 
                         </li>
 
                         <li class="list-group-item">
 
-                            Erledigt: 36
+                            Erledigt: {{ taskCount['done'] }}
 
                         </li>
 
