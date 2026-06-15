@@ -43,7 +43,7 @@ class Task
     /**
      * @var Collection<int, Subtask>
      */
-    #[ORM\OneToMany(targetEntity: Subtask::class, mappedBy: 'task')]
+    #[ORM\OneToMany(targetEntity: Subtask::class, mappedBy: 'task', orphanRemoval: true)]
     private Collection $subtasks;
 
     public function __construct()

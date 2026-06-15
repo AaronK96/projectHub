@@ -16,6 +16,7 @@
 
     </div>
 
+    {% set subtasks = task.subtasks %}
     {% if subtasks|length > 0 %}
 
         {% for subtask in subtasks %}

@@ -1,0 +1,13 @@
+<div class="card">
+
+    {% if task.content %}
+        {{ task.content|raw }}
+    {% else %}
+        <div class="empty-state">
+            Noch keine Beschreibung vorhanden.
+        </div>
+    {% endif %}
+
+</div>
+
+{% include 'components/task/_attachments.html.twig' %}

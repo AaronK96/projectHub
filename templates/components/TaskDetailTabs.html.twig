@@ -1,0 +1,477 @@
+<div {{ attributes }}>
+
+    <div class="tabs-card">
+
+        <button
+            type="button"
+            class="task-tab {{ activeTab == 'overview' ? 'active' }}"
+            data-action="live#action"
+            data-live-action-param="changeTab"
+            data-live-tab-param="overview">
+
+            <i class="bi bi-grid"></i>
+            Übersicht
+
+        </button>
+
+        <button
+            type="button"
+            class="task-tab {{ activeTab == 'subtasks' ? 'active' }}"
+            data-action="live#action"
+            data-live-action-param="changeTab"
+            data-live-tab-param="subtasks">
+
+            <i class="bi bi-list-check"></i>
+            Unteraufgaben
+
+            <span class="tab-count">
+                {{ this.totalCount }}
+            </span>
+
+        </button>
+
+        <button
+            type="button"
+            class="task-tab {{ activeTab == 'files' ? 'active' }}"
+            data-action="live#action"
+            data-live-action-param="changeTab"
+            data-live-tab-param="files">
+
+            <i class="bi bi-paperclip"></i>
+            Dateien
+
+            <span class="tab-count">
+                3
+            </span>
+
+        </button>
+
+        <button
+            type="button"
+            class="task-tab {{ activeTab == 'comments' ? 'active' }}"
+            data-action="live#action"
+            data-live-action-param="changeTab"
+            data-live-tab-param="comments">
+
+            <i class="bi bi-chat-dots"></i>
+            Kommentare
+
+            <span class="tab-count">
+                2
+            </span>
+
+        </button>
+
+        <button
+            type="button"
+            class="task-tab {{ activeTab == 'time' ? 'active' }}"
+            data-action="live#action"
+            data-live-action-param="changeTab"
+            data-live-tab-param="time">
+
+            <i class="bi bi-stopwatch"></i>
+            Zeiterfassung
+
+        </button>
+
+        <button
+            type="button"
+            class="task-tab {{ activeTab == 'activity' ? 'active' }}"
+            data-action="live#action"
+            data-live-action-param="changeTab"
+            data-live-tab-param="activity">
+
+            <i class="bi bi-activity"></i>
+            Aktivität
+
+        </button>
+
+    </div>
+
+    <div class="tab-content-card">
+
+        {% if activeTab == 'overview' %}
+
+            {% include 'components/task/_overview.html.twig' with {
+                task: task
+            } %}
+
+        {% elseif activeTab == 'subtasks' %}
+
+            {# {% include 'components/task/_subtasks.html.twig' with {
+                task: task
+            } %} #}
+
+            {{ component('TaskSubtasks', {
+                task: task
+            }) }}
+
+        {% elseif activeTab == 'files' %}
+
+            {% include 'components/task/_attachments.html.twig' with {
+                task: task
+            } %}
+
+        {% elseif activeTab == 'comments' %}
+
+            <div class="section-header mb-4">
+
+                <h3>
+
+                    Kommentare
+
+                </h3>
+
+                <button class="action-btn">
+
+                    Kommentar hinzufügen
+
+                </button>
+
+            </div>
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=12"
+                        alt="Max Mustermann">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Max Mustermann
+
+                            </strong>
+
+                            Bitte die Fehlermeldung beim ungültigen Login noch deutlicher formulieren.
+
+                        </div>
+
+                        <small>
+
+                            vor 5 Stunden
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=5"
+                        alt="Lisa Schneider">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Lisa Schneider
+
+                            </strong>
+
+                            Die aktualisierten Screens sind hochgeladen und bereit für das Review.
+
+                        </div>
+
+                        <small>
+
+                            vor 2 Stunden
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% elseif activeTab == 'time' %}
+
+            <div class="section-header mb-4">
+
+                <h3>
+
+                    Zeiterfassung
+
+                </h3>
+
+                <button class="action-btn">
+
+                    Zeit erfassen
+
+                </button>
+
+            </div>
+
+            <div class="meta-row">
+
+                <span>
+
+                    Erfasste Zeit
+
+                </span>
+
+                <strong>
+
+                    6h 45m
+
+                </strong>
+
+            </div>
+
+            <div class="meta-row">
+
+                <span>
+
+                    Geplant
+
+                </span>
+
+                <strong>
+
+                    8h
+
+                </strong>
+
+            </div>
+
+            <div class="progress mb-4">
+
+                <div
+                    class="progress-bar"
+                    style="width:84%">
+
+                </div>
+
+            </div>
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=12"
+                        alt="Max Mustermann">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Max Mustermann
+
+                            </strong>
+
+                            hat 2h 15m für UI-Anpassungen erfasst
+
+                        </div>
+
+                        <small>
+
+                            vor 3 Stunden
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=5"
+                        alt="Lisa Schneider">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Lisa Schneider
+
+                            </strong>
+
+                            hat 4h 30m für Design und Abstimmung erfasst
+
+                        </div>
+
+                        <small>
+
+                            gestern
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% elseif activeTab == 'activity' %}
+
+            <div class="section-header mb-4">
+
+                <h3>
+
+                    Aktivität
+
+                </h3>
+
+            </div>
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=5"
+                        alt="Lisa Schneider">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Lisa Schneider
+
+                            </strong>
+
+                            hat die Aufgabe erstellt
+
+                        </div>
+
+                        <small>
+
+                            vor 2 Tagen
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=12"
+                        alt="Max Mustermann">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Max Mustermann
+
+                            </strong>
+
+                            hat die Priorität geändert
+
+                        </div>
+
+                        <small>
+
+                            vor 1 Tag
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=5"
+                        alt="Lisa Schneider">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Lisa Schneider
+
+                            </strong>
+
+                            hat den Status auf
+
+                            <span class="status-inline">
+
+                                In Progress
+
+                            </span>
+
+                            gesetzt
+
+                        </div>
+
+                        <small>
+
+                            vor 22 Stunden
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <img
+                        src="https://i.pravatar.cc/40?img=8"
+                        alt="Thomas Weber">
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+
+                                Thomas Weber
+
+                            </strong>
+
+                            hat
+
+                            <span class="file-inline">
+
+                                login-design.fig
+
+                            </span>
+
+                            hochgeladen
+
+                        </div>
+
+                        <small>
+
+                            vor 8 Stunden
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>

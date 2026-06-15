@@ -20,11 +20,14 @@ class Subtask
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
-    #[ORM\Column]
-    private ?bool $is_completed = null;
+    #[ORM\Column(options: ['default' => false])]
+    private bool $isCompleted = false;
 
     #[ORM\Column(nullable: true)]
     private ?int $position = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
 
     public function getId(): ?int
     {
@@ -62,14 +65,35 @@ class Subtask
         return $this;
     }
 
-    public function isCompleted(): ?bool
+    public function isCompleted(): bool
     {
-        return $this->is_completed;
+        return $this->isCompleted;
     }
 
-    public function setIsCompleted(bool $is_completed): static
+    public function setIsCompleted(bool $isCompleted): static
     {
-        $this->is_completed = $is_completed;
+        $this->isCompleted = $isCompleted;
+
+        return $this;
+    }
+
+    public function complete(): static
+    {
+        $this->isCompleted = true;
+
+        return $this;
+    }
+
+    public function reopen(): static
+    {
+        $this->isCompleted = false;
+
+        return $this;
+    }
+
+    public function toggleCompleted(): static
+    {
+        $this->isCompleted = !$this->isCompleted;
 
         return $this;
     }
@@ -82,6 +106,18 @@ class Subtask
     public function setPosition(?int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
