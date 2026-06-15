@@ -189,17 +189,38 @@
 
                         <td>
 
-                            <div class="d-flex align-items-center gap-2">
+                            {% if task.assignee %}
 
-                                <img
+                                <div class="d-flex align-items-center gap-2">
 
-                                    src="https://i.pravatar.cc/40?img={{ loop.index }}"
+                                    {% if task.assignee.avatarUrl %}
 
-                                    class="user-avatar">
+                                        <img
+                                            src="{{ task.assignee.avatarUrl }}"
+                                            class="user-avatar"
+                                            alt="{{ task.assignee.fullName }}">
 
-                                {{ task.assignee }}
+                                    {% else %}
 
-                            </div>
+                                        <div class="user-avatar-placeholder">
+                                            {{ task.assignee.initials }}
+                                        </div>
+
+                                    {% endif %}
+
+                                    <span>
+                                        {{ task.assignee.fullName }}
+                                    </span>
+
+                                </div>
+
+                            {% else %}
+
+                                <span class="text-muted">
+                                    Nicht zugewiesen
+                                </span>
+
+                            {% endif %}
 
                         </td>
 
@@ -225,7 +246,7 @@
 
                         <td>
 
-                            {{ task.deadline|date }}
+                            {{ task.dueDate ? task.dueDate|date('d.m.Y') : '-' }}
 
                         </td>
 
