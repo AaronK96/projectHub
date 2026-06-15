@@ -11,6 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
+    public const STATUS_TODO = 'todo';
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_REVIEW = 'review';
+    public const STATUS_DONE = 'done';
+
+    public const PRIORITY_LOW = 'low';
+    public const PRIORITY_MEDIUM = 'medium';
+    public const PRIORITY_HIGH = 'high';
+    public const PRIORITY_URGENT = 'urgent';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,23 +29,17 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Project $project = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $title = null;
+    #[ORM\Column(length: 255)]
+    private string $title;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $status = null;
+    #[ORM\Column(length: 50)]
+    private string $status = self::STATUS_TODO;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $priority = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $assignee = null;
-
-    #[ORM\Column]
-    private ?\DateTime $deadline = null;
+    #[ORM\Column(length: 50)]
+    private string $priority = self::PRIORITY_MEDIUM;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
@@ -44,11 +48,33 @@ class Task
      * @var Collection<int, Subtask>
      */
     #[ORM\OneToMany(targetEntity: Subtask::class, mappedBy: 'task', orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC', 'id' => 'ASC'])]
     private Collection $subtasks;
+
+    #[ORM\ManyToOne(inversedBy: 'createdTasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy = null;
+
+    #[ORM\ManyToOne(inversedBy: 'assignedTasks')]
+    private ?User $assignee = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $dueDate = null;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $createdAt;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
         $this->subtasks = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function updateTimestamp(): void {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -82,7 +108,7 @@ class Task
 
     public function setTitle(?string $title): static
     {
-        $this->title = $title;
+        $this->title = trim($title);
 
         return $this;
     }
@@ -106,9 +132,42 @@ class Task
 
     public function setStatus(?string $status): static
     {
+        if (!in_array($status, self::availableStatuses(), true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid task status "%s".', $status));
+        }
+
         $this->status = $status;
 
         return $this;
+    }
+
+    public function isDone(): bool 
+    {
+        return $this->status === self::STATUS_DONE;
+    }
+
+    public function markAsDone(): static 
+    {
+        $this->status = self::STATUS_DONE;
+
+        return $this;
+    }
+
+    public function reopen(): static 
+    {
+        $this->status = self::STATUS_TODO;
+
+        return $this;
+    }
+
+    public static function availableStatuses(): array
+    {
+        return [
+            self::STATUS_TODO,
+            self::STATUS_IN_PROGRESS,
+            self::STATUS_REVIEW,
+            self::STATUS_DONE,
+        ];
     }
 
     public function getPriority(): ?string
@@ -118,33 +177,22 @@ class Task
 
     public function setPriority(?string $priority): static
     {
+        if (!in_array($priority, self::availablePriorities(), true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid task priority "%s".', $priority));
+        }
         $this->priority = $priority;
 
         return $this;
     }
 
-    public function getAssignee(): ?string
+    public static function availablePriorities(): array
     {
-        return $this->assignee;
-    }
-
-    public function setAssignee(string $assignee): static
-    {
-        $this->assignee = $assignee;
-
-        return $this;
-    }
-
-    public function getDeadline(): ?\DateTime
-    {
-        return $this->deadline;
-    }
-
-    public function setDeadline(\DateTime $deadline): static
-    {
-        $this->deadline = $deadline;
-
-        return $this;
+        return [
+            self::PRIORITY_LOW,
+            self::PRIORITY_MEDIUM,
+            self::PRIORITY_HIGH,
+            self::PRIORITY_URGENT,
+        ];
     }
 
     public function getContent(): ?string
@@ -167,6 +215,22 @@ class Task
         return $this->subtasks;
     }
 
+    public function getCompletedSubtaskCount(): int
+    {
+        return $this->subtasks
+            ->filter(fn (Subtask $subtask) => $subtask->isCompleted())
+            ->count();
+    }
+
+    public function getSubtaskProgress(): int
+    {
+        if ($this->subtasks->count() === 0) {
+            return 0;
+        }
+
+        return (int) round(($this->getCompletedSubtaskCount() / $this->subtasks->count()) * 100);
+    }
+
     public function addSubtask(Subtask $subtask): static
     {
         if (!$this->subtasks->contains($subtask)) {
@@ -187,5 +251,70 @@ class Task
         }
 
         return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getAssignee(): ?User
+    {
+        return $this->assignee;
+    }
+
+    public function setAssignee(?User $assignee): static
+    {
+        $this->assignee = $assignee;
+
+        return $this;
+    }
+
+    public function isAssignee(): bool
+    {
+        return $this->assignee !== null;
+    }
+
+    public function assignTo(User $user): static 
+    {
+        $this->assignee = $user;
+        
+        return $this;
+    }
+
+    public function unassign(): static 
+    {
+        $this->assignee = null;
+
+        return $this;
+    }
+
+    public function getDueDate(): ?\DateTimeImmutable
+    {
+        return $this->dueDate;
+    }
+
+    public function setDueDate(?\DateTimeImmutable $dueDate): static
+    {
+        $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

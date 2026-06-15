@@ -8,41 +8,62 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Project
 {
+    public const STATUS_TODO = 'todo';
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_REVIEW = 'review';
+    public const STATUS_DONE = 'done';
+    public const STATUS_ARCHIVED = 'archived';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Team>
-     */
-    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'projects')]
-    private Collection $team;
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'projects')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Team $team;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $name = null;
+    #[ORM\ManyToOne(inversedBy: 'ownedProjects')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
+    private string $name;
+
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $status = null;
+    #[ORM\Column(length: 50)]
+    private string $status = self::STATUS_TODO;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $tasks;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTime $deadline = null;
+    private ?\DateTimeImmutable $deadline = null;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $createdAt;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
-        $this->team = new ArrayCollection();
         $this->tasks = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function updateTimestamp(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -57,26 +78,14 @@ class Project
         return $this;
     }
 
-    /**
-     * @return Collection<int, Team>
-     */
-    public function getTeam(): Collection
+    public function getTeam(): ?Team
     {
         return $this->team;
     }
 
-    public function addTeam(Team $team): static
+    public function setTeam(?Team $team): static
     {
-        if (!$this->team->contains($team)) {
-            $this->team->add($team);
-        }
-
-        return $this;
-    }
-
-    public function removeTeam(Team $team): static
-    {
-        $this->team->removeElement($team);
+        $this->team = $team;
 
         return $this;
     }
@@ -88,7 +97,7 @@ class Project
 
     public function setName(?string $name): static
     {
-        $this->name = $name;
+        $this->name = trim($name);
 
         return $this;
     }
@@ -112,9 +121,24 @@ class Project
 
     public function setStatus(?string $status): static
     {
+        if (!in_array($status, self::availableStatuses(), true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid project status "%s".', $status));
+        }
+
         $this->status = $status;
 
         return $this;
+    }
+
+    public static function availableStatuses(): array
+    {
+        return [
+            self::STATUS_TODO,
+            self::STATUS_IN_PROGRESS,
+            self::STATUS_REVIEW,
+            self::STATUS_DONE,
+            self::STATUS_ARCHIVED,
+        ];
     }
 
     /**
@@ -123,6 +147,27 @@ class Project
     public function getTasks(): Collection
     {
         return $this->tasks;
+    }
+
+    public function getTotalTaskCount(): int
+    {
+        return $this->tasks->count();
+    }
+
+    public function getCompletedTaskCount(): int
+    {
+        return $this->tasks
+            ->filter(fn (Task $task) => $task->isDone())
+            ->count();
+    }
+
+    public function getProgress(): int
+    {
+        if ($this->getTotalTaskCount() === 0) {
+            return 0;
+        }
+
+        return (int) round(($this->getCompletedTaskCount() / $this->getTotalTaskCount()) * 100);
     }
 
     public function addTask(Task $task): static
@@ -147,14 +192,36 @@ class Project
         return $this;
     }
 
-    public function getDeadline(): ?\DateTime
+    public function getDeadline(): ?\DateTimeImmutable
     {
         return $this->deadline;
     }
 
-    public function setDeadline(?\DateTime $deadline): static
+    public function setDeadline(?\DateTimeImmutable $deadline): static
     {
         $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
