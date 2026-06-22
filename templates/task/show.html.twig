@@ -59,4 +59,11 @@ TASK-124 - {{ task.title }}
     }) 
 }}
 
+{{ 
+    component('TaskDueDateModal', {
+        task: task,
+        key: 'task-due-date-modal-' ~ task.id
+    }) 
+}}
+
 {% endblock %}

@@ -1,0 +1,92 @@
+<div {{ attributes }}>
+
+    <div
+        class="modal fade"
+        id="taskDueDateModal"
+        tabindex="-1"
+        aria-labelledby="taskDueDateModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content task-modal">
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h5
+                            class="modal-title"
+                            id="taskDueDateModalLabel">
+
+                            Fälligkeitsdatum ändern
+
+                        </h5>
+
+                        <p class="modal-subtitle">
+                            Lege fest, bis wann diese Aufgabe erledigt sein soll.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Schließen">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="modal-field">
+
+                        <label>Fälligkeitsdatum</label>
+
+                        <div class="modal-date-wrapper">
+
+                            <i class="bi bi-calendar-event"></i>
+
+                            <input
+                                type="date"
+                                class="modal-input modal-date-input"
+                                data-model="selectedDueDate">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="action-btn"
+                        data-bs-dismiss="modal">
+
+                        Abbrechen
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-primary-action"
+                        data-action="live#action"
+                        data-live-action-param="updateDueDate"
+                        data-bs-dismiss="modal">
+
+                        Speichern
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
