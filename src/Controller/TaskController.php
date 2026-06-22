@@ -27,10 +27,6 @@ final class TaskController extends AbstractController
     {
         $subtasks = $task->getSubtasks();
 
-        foreach ($subtasks as $subtask) {
-            dump($subtask);
-        }
-
         return $this->render('task/show.html.twig', [
             'controller_name' => 'TaskController',
             'task'           =>  $task,
