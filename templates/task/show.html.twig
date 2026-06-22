@@ -23,9 +23,11 @@ TASK-124 - {{ task.title }}
 
             {% include 'components/task/_task_info.html.twig' %}
 
-            {{ component('TaskDetailTabs', {
-                task: task
-            }) }}
+            {{ 
+                component('TaskDetailTabs', {
+                    task: task
+                }) 
+            }}
             {# {% include 'components/task/_tabs.html.twig' %}
 
             {% include 'components/task/_description.html.twig' %}
@@ -34,17 +36,14 @@ TASK-124 - {{ task.title }}
 
         </div>
 
-        <div class="task-sidebar">
+        {{ 
+            component('TaskSidebar', {
+                task: task,
+                key: 'task-sidebar-' ~ task.id
+            }) 
+        }}
 
-            {% include 'components/task/_meta_sidebar.html.twig' %}
-
-            {% include 'components/task/_assignee_card.html.twig' %}
-
-            {% include 'components/task/_subtasks.html.twig' %}
-
-            {% include 'components/task/_activity_feed.html.twig' %}
-
-        </div>
+        {% include 'components/task/_activity_feed.html.twig' %}
 
     </div>
 

@@ -1,0 +1,17 @@
+<div {{ attributes }} class="task-sidebar">
+
+    {% include 'components/task/_meta_sidebar.html.twig' with {
+        task: task
+    } only %}
+
+    {% include 'components/task/_assignee_card.html.twig' with {
+        task: task
+    } only %}
+
+    {{ component('TaskSubtasks', {
+        task: task,
+        variant: 'compact',
+        key: 'task-subtasks-compact-' ~ task.id
+    }) }}
+
+</div>
