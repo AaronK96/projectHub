@@ -1,0 +1,99 @@
+<div {{ attributes }}>
+
+    <div
+        class="modal fade"
+        id="taskAssigneeModal"
+        tabindex="-1"
+        aria-labelledby="taskAssigneeModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content task-modal">
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h5
+                            class="modal-title"
+                            id="taskAssigneeModalLabel">
+
+                            Assignee ändern
+
+                        </h5>
+
+                        <p class="modal-subtitle">
+                            Weise diese Aufgabe einer Person zu.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Schließen">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="modal-field">
+
+                        <label>Zugewiesen an</label>
+
+                        <select
+                            class="modal-input"
+                            data-model="selectedAssigneeId">
+
+                            <option value="">
+                                Nicht zugewiesen
+                            </option>
+
+                            {% for user in this.assignableUsers %}
+
+                                <option value="{{ user.id }}">
+                                    {{ user.fullName }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="action-btn"
+                        data-bs-dismiss="modal">
+
+                        Abbrechen
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-primary-action"
+                        data-action="live#action"
+                        data-live-action-param="updateAssignee"
+                        data-bs-dismiss="modal">
+
+                        Speichern
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

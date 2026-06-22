@@ -50,4 +50,13 @@ TASK-124 - {{ task.title }}
 
 </div>
 
+{# Modals #}
+
+{{ 
+    component('TaskAssigneeModal', {
+        task: task,
+        key: 'task-assignee-modal-' ~ task.id
+    }) 
+}}
+
 {% endblock %}
