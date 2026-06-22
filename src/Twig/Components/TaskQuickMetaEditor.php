@@ -49,7 +49,6 @@ final class TaskQuickMetaEditor
         
         $this->entityManager->flush();
 
-        //TODO: Implement Listener in Task Sidebar
         $this->emit('taskUpdated', [
             'taskId' => $this->task->getId()
         ]);
@@ -66,7 +65,6 @@ final class TaskQuickMetaEditor
 
         $this->entityManager->flush();
 
-        //TODO: Implement Listener in Task Sidebar
         $this->emit('taskUpdated', [
             'taskId' => $this->task->getId()
         ]);
