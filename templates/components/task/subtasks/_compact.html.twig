@@ -1,0 +1,81 @@
+<div class="sidebar-card">
+
+    <div class="section-header">
+
+        <div>
+            <h4>Unteraufgaben</h4>
+            <small>
+                {{ this.completedCount }} / {{ this.totalCount }} erledigt
+            </small>
+        </div>
+
+    </div>
+
+    <div class="compact-progress-header">
+        <span>Fortschritt</span>
+        <strong>{{ this.progress }}%</strong>
+    </div>
+
+    <div class="compact-progress">
+        <div
+            class="compact-progress-bar"
+            style="width: {{ this.progress }}%">
+        </div>
+    </div>
+
+    <div class="compact-subtask-list">
+
+        {% for subtask in this.visibleSubtasks %}
+
+            <div class="compact-subtask {{ subtask.completed ? 'is-done' }}">
+
+                <button
+                    type="button"
+                    class="compact-subtask-check"
+                    data-action="live#action"
+                    data-live-action-param="toggleSubtask"
+                    data-live-subtask-id-param="{{ subtask.id }}">
+
+                    {% if subtask.completed %}
+                        <i class="bi bi-check-circle-fill"></i>
+                    {% else %}
+                        <i class="bi bi-circle"></i>
+                    {% endif %}
+
+                </button>
+
+                <div class="compact-subtask-content">
+
+                    <strong>
+                        {{ subtask.title }}
+                    </strong>
+
+                    {% if subtask.description %}
+                        <small>
+                            {{ subtask.description|u.truncate(55, '...') }}
+                        </small>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state compact">
+                Keine Unteraufgaben vorhanden.
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% if this.totalCount > 4 %}
+
+        <button class="action-btn-small w-100 mt-3">
+            Alle Unteraufgaben anzeigen
+        </button>
+
+    {% endif %}
+
+</div>

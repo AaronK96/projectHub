@@ -1,12 +1,16 @@
-<div class="sidebar-card">
+{{
+    component('TaskSubtasks', {
+        task: task,
+        variant: 'compact',
+        key: 'task-subtasks-compact-' ~ task.id 
+    })
+}}
+
+{# <div class="sidebar-card">
 
     <div class="section-header">
 
-        <h4>
-
-            Unteraufgaben
-
-        </h4>
+        <h4>Unteraufgaben</h4>
 
         <button class="action-btn-small icon-btn">
 
@@ -46,4 +50,4 @@
         Noch keine Unteraufgaben vorhanden
     {% endif %}
 
-</div>
+</div> #}

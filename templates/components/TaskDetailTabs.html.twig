@@ -103,7 +103,9 @@
             } %} #}
 
             {{ component('TaskSubtasks', {
-                task: task
+                task: task,
+                variant: 'full',
+                key: 'task-subtasks-full-' ~ task.id 
             }) }}
 
         {% elseif activeTab == 'files' %}

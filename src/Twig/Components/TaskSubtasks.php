@@ -8,16 +8,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
 final class TaskSubtasks
 {
     use DefaultActionTrait;
+    use ComponentToolsTrait;
 
     #[LiveProp]
     public Task $task;
+
+    #[LiveProp]
+    public string $variant = 'full';
 
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {
@@ -41,6 +47,19 @@ final class TaskSubtasks
         $subTask->toggleCompleted();
 
         $this->entityManager->flush();
+
+        $this->emit('subtaskUpdated', [
+            'taskId' => $this->task->getId()
+        ]);
+    }
+
+    #[LiveListener('subtaskUpdated')]
+    public function refreshAfterSubtaskUpdate(#[LiveArg] int $taskId): void {
+        if($taskId !== $this->task->getId()) {
+            return;
+        }
+
+        $this->entityManager->refresh($this->task);
     }
 
     public function getCompletedCount(): int
@@ -63,5 +82,14 @@ final class TaskSubtasks
         }
 
         return (int) round(($this->getCompletedCount() / $this->getTotalCount()) * 100);
+    }
+
+    public function getVisibleSubtasks(): iterable 
+    {
+        if($this->variant === 'compact') {
+            return $this->task->getSubtasks()->slice(0, 4);
+        }
+
+        return $this->task->getSubtasks();
     }
 }
