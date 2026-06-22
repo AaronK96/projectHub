@@ -1,4 +1,6 @@
 @import './subtask/subtask.css';
+@import './task-quick-meta-editor.css';
+@import './task-sidebar.css';
 
 .task-page{
     padding:32px;

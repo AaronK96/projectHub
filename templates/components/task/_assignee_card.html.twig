@@ -1,39 +1,89 @@
-<div class="sidebar-card">
+<div class="sidebar-card task-assignee-card">
 
-    <h4>
-
-        Zugewiesen an
-
-    </h4>
-
-    <div class="assignee">
-
-        <img
-
-            src="https://i.pravatar.cc/50?img=5">
+    <div class="sidebar-card-header">
 
         <div>
+            <h4>
+                <i class="bi bi-person"></i>
+                Zugewiesen an
+            </h4>
 
-            <strong>
+            <p>
+                Verantwortliche Person für diese Aufgabe.
+            </p>
+        </div>
 
-                Lisa Schneider
+    </div>
 
-            </strong>
+    {% if task.assignee %}
 
-            <small>
+        <div class="assignee-profile">
 
-                UI/UX Designer
+            {% if task.assignee.avatarUrl %}
 
-            </small>
+                <img
+                    src="{{ task.assignee.avatarUrl }}"
+                    alt="{{ task.assignee.fullName }}"
+                    class="assignee-avatar">
+
+            {% else %}
+
+                <div class="assignee-placeholder">
+                    {{ task.assignee.initials }}
+                </div>
+
+            {% endif %}
+
+            <div class="assignee-info">
+
+                <strong>
+                    {{ task.assignee.fullName }}
+                </strong>
+
+                <small>
+                    UI/UX Designer
+                </small>
+
+            </div>
+
+            <button
+                type="button"
+                class="assignee-mail-btn"
+                aria-label="E-Mail senden">
+
+                <i class="bi bi-envelope"></i>
+
+            </button>
 
         </div>
 
-        <button class="action-btn-small mail-btn">
+    {% else %}
 
-            <i class="bi bi-envelope"></i>
+        <div class="assignee-empty">
 
-        </button>
+            <i class="bi bi-person-plus"></i>
 
-    </div>
+            <div>
+                <strong>Nicht zugewiesen</strong>
+
+                <small>
+                    Diese Aufgabe hat noch keine verantwortliche Person.
+                </small>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+    <button
+        type="button"
+        class="assignee-change-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#taskAssigneeModal">
+
+        <i class="bi bi-person-gear"></i>
+        Assignee ändern
+
+    </button>
 
 </div>

@@ -1,63 +1,142 @@
-<div class="sidebar-card">
+<div class="sidebar-card task-details-card">
 
-    <div class="meta-row">
+    <div class="sidebar-card-header">
 
-        <i class="bi bi-flag"></i>
+        <div>
+            <h4>
+                <i class="bi bi-person-lines-fill"></i>
+                Details
+            </h4>
 
-        <span>Erstellt am</span>
-
-        <strong>12. Juni 2025</strong>
-
-    </div>
-
-    <div class="meta-row">
-
-        <i class="bi bi-calendar-event"></i>
-
-        <span>Fälligkeitsdatum</span>
-
-        <strong>26. Juni 2025</strong>
+            <p>
+                Wichtige Informationen zu dieser Aufgabe.
+            </p>
+        </div>
 
     </div>
 
-    <div class="meta-row">
+    <div class="details-list">
 
-        <i class="bi bi-clock"></i>
+        <div class="detail-row">
 
-        <span>Geschätzter Aufwand</span>
+            <div class="detail-icon">
+                <i class="bi bi-flag"></i>
+            </div>
 
-        <strong>8h</strong>
+            <div class="detail-content">
+                <span>Erstellt am</span>
 
-    </div>
-
-    <div class="meta-row">
-
-        <i class="bi bi-stopwatch"></i>
-
-        <span>Verbrauchte Zeit</span>
-
-        <strong>3h 20m</strong>
-
-    </div>
-
-    <div class="meta-progress">
-
-        <div class="d-flex justify-content-between">
-
-            <span>Fortschritt</span>
-
-            <strong>40%</strong>
+                <strong>
+                    {{ task.createdAt ? task.createdAt|date('d. F Y') : '-' }}
+                </strong>
+            </div>
 
         </div>
 
-        <div class="progress">
+        <div class="detail-row is-editable">
+
+            <div class="detail-icon">
+                <i class="bi bi-calendar-event"></i>
+            </div>
+
+            <div class="detail-content">
+                <span>Fälligkeitsdatum</span>
+
+                <strong>
+                    {{ task.dueDate ? task.dueDate|date('d. F Y') : 'Kein Datum' }}
+                </strong>
+            </div>
+
+            <button
+                type="button"
+                class="detail-edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#taskDueDateModal"
+                aria-label="Fälligkeitsdatum bearbeiten">
+
+                <i class="bi bi-pencil"></i>
+
+            </button>
+
+        </div>
+
+        <div class="detail-row is-editable">
+
+            <div class="detail-icon">
+                <i class="bi bi-clock"></i>
+            </div>
+
+            <div class="detail-content">
+                <span>Geschätzter Aufwand</span>
+
+                <strong>
+                    {# TODO: Reale "estimated time" werte verwenden nach implementation #}
+                    8h
+                </strong>
+            </div>
+
+            {# TODO: Implement taskEstimatedTimeModal #}
+            <button
+                type="button"
+                class="detail-edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#taskEstimatedTimeModal"
+                aria-label="Geschätzter Aufwand bearbeiten">
+
+                <i class="bi bi-pencil"></i>
+
+            </button>
+
+        </div>
+
+        <div class="detail-row is-editable">
+
+            <div class="detail-icon">
+                <i class="bi bi-stopwatch"></i>
+            </div>
+
+            <div class="detail-content">
+                <span>Verbrauchte Zeit</span>
+
+                <strong>
+                    {# TODO: Reale "time spent" werte verwenden nach implementation #}
+                    3h 20m
+                </strong>
+            </div>
+
+            {# TODO: Implement taskSpendTimeModal #}
+            <button
+                type="button"
+                class="detail-edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#taskSpentTimeModal"
+                aria-label="Geschätzter Aufwand bearbeiten">
+
+                <i class="bi bi-pencil"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="sidebar-progress-row">
+
+        <div class="sidebar-progress-header">
+
+            <span>Fortschritt</span>
+
+            <strong>
+                {{ task.subtaskProgress }}%
+            </strong>
+
+        </div>
+
+        <div class="sidebar-progress">
 
             <div
-
-                class="progress-bar"
-
-                style="width:40%">
-
+                class="sidebar-progress-bar"
+                style="width: {{ task.subtaskProgress }}%">
             </div>
 
         </div>

@@ -58,7 +58,7 @@
 
         </div>
 
-        <div class="task-status-panel">
+        {# <div class="task-status-panel">
 
             <div class="field">
 
@@ -100,8 +100,15 @@
 
             </div>
 
-        </div>
+        </div> #}
 
     </div>
 
+    {{
+        component('TaskQuickMetaEditor', {
+            task: task,
+            key: 'task-quick-meta-editor-' ~ task.id
+        })
+    }}
+    
 </div>

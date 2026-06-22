@@ -1,0 +1,71 @@
+<div {{ attributes }} class="task-quick-meta-editor">
+
+    <div class="quick-meta-field">
+
+        <label>Status</label>
+
+        <div class="quick-meta-select-wrapper">
+
+            <span class="quick-meta-dot status-{{ selectedStatus }}"></span>
+
+            <select
+                class="quick-meta-select"
+                data-model="selectedStatus"
+                data-action="change->live#action"
+                data-live-action-param="updateStatus">
+
+                {% for status in task.availableStatuses %}
+
+                    <option
+                        value="{{ status }}"
+                        {{ selectedStatus == status ? 'selected' }}>
+
+                        {{ this.statusLabel(status) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <i class="bi bi-chevron-down quick-meta-chevron"></i>
+
+        </div>
+
+    </div>
+
+    <div class="quick-meta-field">
+
+        <label>Priorität</label>
+
+        <div class="quick-meta-select-wrapper">
+
+            <span class="quick-meta-dot priority-{{ selectedPriority }}"></span>
+
+            <select
+                class="quick-meta-select"
+                data-model="selectedPriority"
+                data-action="change->live#action"
+                data-live-action-param="updatePriority">
+
+                {% for priority in task.availablePriorities %}
+
+                    <option
+                        value="{{ priority }}"
+                        {{ selectedPriority == priority ? 'selected' }}>
+
+                        {{ this.priorityLabel(priority) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <i class="bi bi-chevron-down quick-meta-chevron"></i>
+
+        </div>
+
+    </div>
+
+</div>
